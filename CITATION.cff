@@ -1,13 +1,11 @@
 cff-version: 1.2.0
 message: "If you use this software in your work, please cite it using these metadata."
 title: "Agentix: Framework for Building Cognitive Agents"
-version: 1.0.0
-date-released: 2023-04-01
+version: 0.1.4
+date-released: 2024-03-01
 authors:
-  - family-names: "YourLastName"
-    given-names: "YourFirstName"
-    orcid: "https://orcid.org/YourORCID"
-    email: "youremail@example.com"
-    affiliation: "YourAffiliation"
+  - family-names: "DION"
+    given-names: "Valentin"
+    email: "v@lentin.fr"
 license: "MIT"
-repository-code: "https://github.com/YourGitHub/Agentix"
+repository-code: "https://github.com/valentin-dion/Agentix"
