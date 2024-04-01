@@ -32,7 +32,19 @@ TODO: talk about swarm of clones vs swarms of specialist
 ______________
 
 * ** Tree of specialists **
-TODO: talk about
+TODO: talk about "Agents as code".
+TODO: Talk about maximum specialisation
+TODO: Agentic single responsibility principle
+
+
+* Control flow is code's responsibility
+* Agents are functions
+* The burden of tool use should be taken care of by algorithm whenever it's possible.
+* Low level agents should have as little responsibility as possible (idealy, 1~2 tools per agent, no more than 4).
+
+
+### Grounding is all you need
+
 ### Agents
 
 Here we'll define what `Agent`s are in **Agentix**
@@ -43,9 +55,41 @@ From an inside/implementation perspective `Agent`s are stacks of middlewares
 
 #### Agents are functions
 
+From the outside, an agent is conceptually a function. It ingests inputs and return outputs of given types. While this principle is simple and doesn't look like much, it proved unsuspectedly powerful to implement complex control flow over LLM inferences.
 
+Exemple of control flow with agentFlow
+```python
+for task in Agent['taskLister'](user_input):
+    Agent['taskExecutor'](task)
+```
 
-#### Agents are stacks of MWs
+It allows for agentic with strong algoritmic decoupling, with in turn, makes easy to have very specialist agents.
+For a more concrete example, here's an actual piece of code I used in the implementation of a long term memory:
+
+```python
+for fact in Agent['LTM_fact_extract'](user_input):
+    Agent['LTM_fact_store'](fact)
+
+context = Agent['LTM_fact_recall'](user_input)
+```
+
+Akin to a function, an agent can itself be an arbitrarly complexe set of agents. Resulting for a given task in many contexts/conversations.
+
+**Note**: One thing I first thought as a tradeoff: my approach is heavy in LLM calls. In reality, it's balanced by the fact it requires overall less tokens generated than other approachs (when done correctly). Also, some Agents can run with `gpt-3.5-turbo`.
+
+**experimental takeaway of this approach**
+* Implementing complexe agentic flow is ridiculously easy !
+* Increase overall performances.
+* Multi-LLM architecture (some tasks can be handled by _gpt-3.5-turbo_, ) with gains in both speed and cost.
+
+## Agents as stacks of Middlewares (inside view/implementation details)
+**Inside**:
+From the inside an agent is a stack of ordered middlewares.
+Each middleware should only contain agent core logic.
+(Printing, streaming, logging... should not ever be middlewares concern)
+
+An agent is instanciated by a string representing the middlewares that composes it
+
 ## Concepts
 
 ## Walkthroughs

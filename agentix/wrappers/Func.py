@@ -1,29 +1,30 @@
 import os
+from enum import Enum
 
-def file_property(filename):
-    def getter(self):
-        file_path = os.path.join(self.dir_path, filename)
-        try:
-            with open(file_path, 'r') as file:
-                return file.read()
-        except FileNotFoundError:
-            return None
+from .func_wrapper import FuncWrapper, file_property
+from .instances_store import InstancesStore
 
-    def setter(self, value):
-        file_path = os.path.join(self.dir_path, filename)
-        with open(file_path, 'w') as file:
-            file.write(value)
+# Assuming FuncWrapper and InstancesStore are defined elsewhere
 
-    return property(getter, setter)
+class ImplState(Enum):
+    NIL = 0
+    PROPS = 1
+    MOCKS = 2
+    TEST_WRITTEN = 3
+    SOLVED_MOCK = 4
+    SOLVED_TREE = 5
 
-class FileBackedProperties:
-    def __init__(self, dir_path):
-        self.dir_path = dir_path
 
-    short_desc = file_property('short_desc.md')
-    user_stories = file_property('user_stories.md')
-    test_cases = file_property('test_cases.md')
+class Func(FuncWrapper, metaclass=InstancesStore):
     
+    code = file_property('code.py')
+    
+    def __init__(self, name: str, func: callable):
+        super().__init__(name, func)
+        cwd = os.getcwd()
+        self.dir_path = os.path.join(cwd, "funcs", name)
+        os.makedirs(self.dir_path, exist_ok=True)
+
  
 
 func = Func.register

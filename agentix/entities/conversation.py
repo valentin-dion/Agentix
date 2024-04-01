@@ -42,7 +42,7 @@ class Conversation:
     def __init__(self, msgs: List[Message], flags: dict= None) -> None:
         self._msgs = msgs
         self._flags = flags or {'should_infer': False}
-        self._llm = os.getenv('AGENTFLOW_MODEL') or 'gpt-4'
+        self._llm = os.getenv('AGENTIX_MODEL') or 'gpt-4'
 
     @property
     def should_infer(self) -> bool:
