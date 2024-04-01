@@ -91,6 +91,16 @@ Each middleware should only contain agent core logic.
 An agent is instanciated by a string representing the middlewares that composes it
 
 ## Concepts
-HAHAHAHA
+### Message and Conversation in Agentix
+
+Agentix provides two core classes for handling conversational data: `Message` and `Conversation`.
+
+#### Message
+The `Message` class represents a single message within a conversation. Each message has a `role` (e.g., 'user', 'system', 'assistant') indicating the sender of the message, and `content` which is the text of the message itself. This class is fundamental for tracking the flow of dialogue between the user and the system or between different components of the system.
+
+#### Conversation
+The `Conversation` class encapsulates a sequence of `Message` instances, representing the full exchange between participants over time. It provides methods for creating conversations from strings or files, manipulating them programmatically, and converting them back to strings or files for storage. This allows Agentix to maintain a history of interactions, which is crucial for context management in complex conversational agents.
+
+These classes are designed to be flexible and easy to use, supporting a wide range of conversational agent implementations.
 ## Walkthroughs
 [ShellGPT Walkthrough](/examples/ShellGPT.md)
