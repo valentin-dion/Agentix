@@ -22,7 +22,8 @@ I took a pause and tried my best to design the most **Low code** and **Low boile
 ## Theory
 ### Approaches to agentic
 * ** Monolithic agent **
-!(assets/monolith.webp)[assets/monolith.webp]
+* 
+![assets/monolith.webp](assets/monolith.webp)
 ___________
 
 * ** Swarms **
