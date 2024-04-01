@@ -37,6 +37,13 @@ class Conversation:
     
     def openai(self) -> List[dict]:
         return [msg.to_dict(True) for msg in self.msgs]
+
+    def to_dict(self) -> List[dict]:
+        """
+        Converts the conversation to a list of dictionaries, each representing a message.
+        :return: A list of dictionaries with 'role' and 'content' keys.
+        """
+        return [{'role': msg.role, 'content': msg.content} for msg in self.msgs]
         
     
     def __init__(self, msgs: List[Message], flags: dict= None) -> None:
