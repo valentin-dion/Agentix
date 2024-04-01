@@ -91,6 +91,6 @@ Each middleware should only contain agent core logic.
 An agent is instanciated by a string representing the middlewares that composes it
 
 ## Concepts
-
+HAHAHAHA
 ## Walkthroughs
 [ShellGPT Walkthrough](/examples/ShellGPT.md)
