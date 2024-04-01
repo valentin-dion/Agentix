@@ -4,7 +4,7 @@ import sys
 from rich import print
 
 
-_DEBUG = os.getenv('AGENTFLOW_DEBUG')
+_DEBUG = os.getenv('AGENTIX_DEBUG')
 
 def dynamic_import(directory_name):
     """
