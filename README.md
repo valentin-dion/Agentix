@@ -1,0 +1,4 @@
+# Agentix
+
+Intuitive agentic
+
