@@ -8,6 +8,7 @@ donate: BTC & ETH addresses + tipeee
 hire me (or just chat):v@lentin.fr
 
 Citation: 
+[CITATION.cff](CITATION.cff)
 
 # Agentix
 
