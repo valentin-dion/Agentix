@@ -1,22 +1,22 @@
 # Message and Conversation Documentation
 
 ## Message
-The `Message` class is designed to encapsulate a single message within a conversation. Each message has two main attributes: `role` and `content`.
+The `Message` class encapsulates a single message, identifying the sender (`role`) and the message text (`content`).
 
-- `role`: A string indicating the sender of the message. Common roles include 'user', 'system', and 'assistant'.
-- `content`: The actual text content of the message.
+- `role`: Sender's role (e.g., 'user', 'system', 'assistant').
+- `content`: Text of the message.
 
-Messages are the building blocks of conversations in Agentix, allowing for detailed tracking and manipulation of dialogues.
+Messages are fundamental for tracking and managing dialogues.
 
 ## Conversation
-The `Conversation` class represents a sequence of messages, effectively modeling a full conversation. It provides functionality to create, manipulate, and store conversations.
+The `Conversation` class models a sequence of messages, with methods to manage and persist conversations.
 
-Key methods include:
+Useful methods:
 
-- `from_file(path: str)`: Class method to create a Conversation instance from a file containing a serialized conversation.
-- `from_str(conv_str: str)`: Class method to create a Conversation instance from a string representation of a conversation.
-- `to_str()`: Converts the Conversation instance back into a string representation.
-- `to_file(path: str)`: Saves the Conversation instance to a file.
-- `openai()`: Converts the Conversation into a format suitable for OpenAI API requests.
+- `from_file(path: str)`: Loads a conversation from a file.
+- `from_str(conv_str: str)`: Creates a conversation from a string.
+- `to_str()`: Serializes the conversation to a string.
+- `to_file(path: str)`: Persists the conversation to a file.
+- `openai()`: Formats the conversation for OpenAI API.
 
-Conversations can be manipulated programmatically, allowing for dynamic interaction flows. They support addition of new messages or other conversations, enabling complex dialogue management.
+Conversations support dynamic interactions, including adding messages or merging conversations.
