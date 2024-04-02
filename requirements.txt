@@ -1,1 +1,3 @@
 fire
+toolz
+rich

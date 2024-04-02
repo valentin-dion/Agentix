@@ -1,5 +1,5 @@
 # About
-Hi, I'm Valentin, I ~~tinker with~~ research agentic.
+Hi, I'm Valentin, I tinker with agentic.
 My long term goal is to automate myself as a senior software engineer.
 Since it has been released, I'm convinced GPT-4 is capable of that, with the right cognitive architecture.
 This repository, the framework and the experiments using it (I'll release over time), are my best effort towards that goalpost.
@@ -12,11 +12,27 @@ Citation:
 
 # Agentix
 
-Low boilerplate agentic
+Low boilerplate agentic, as well as everything else.
 
 ## Why
-I've been doing stuff and drawned in complexity.
+I've been researching agentic behaviors for the last 18 months.
+The biggest hurdle was accidental complexity.
 I took a pause and tried my best to design the most **Low code** and **Low boilerplate** framework to implement agentic logic.
+If we're aiming for self improvement, the framework Agents are written in, should also be the framework that Agents write in.
+For that reason, Agentix aims at offering tools to write frontend and web server stuff.
+
+It also aims at implementing any arbitrarely complexe agentic flow with the least amount of code.
+
+## Why is the code weird ?
+
+That's a good question.
+To access any logical brick, we, human, rely on the files system.
+
+What may be te best approach for humans may not be for LLMs.
+
+Bricks (functions, entities, endpoints, frontend components) should be accessed semanticaly, not through paths of any kind.
+
+
 
 
 ## Theory

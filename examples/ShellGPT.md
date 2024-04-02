@@ -10,7 +10,7 @@ we want our Agent to have a prompt (more on that later), have an history, and ru
 ```python
 from agentix import Agent
 
-Agent('ShellGPT','prompt|histo|user_input|llm|shellGPT_loop')
+Agent('ShellGPT','prompt_histo|llm|shellGPT_loop')
 ```
 
 (That's the peak of boilerplate you'll need to implement an Agent)

@@ -1,6 +1,5 @@
-from agentix import agent 
 import fire
-from agentix.wrappers import Agent
+from agentix import Agent
 
 def run_agent(name):
     user_input = input("Enter your input: ")
