@@ -36,6 +36,9 @@ class Agent(metaclass=InstancesStore):
     def base_prompt(self): 
         grandparent_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '..', '..')) # FIXME should be relative to CWD
         pattern = grandparent_path + f"/**/prompts/{self.name}.conv"
+        histo_dir = os.path.dirname(self._histo_path)
+        if not os.path.exists(histo_dir):
+            os.makedirs(histo_dir, exist_ok=True)
 
         for file_path in glob.glob(pattern, recursive=True):
             self._histo_path = file_path.replace('/prompts/','/prompts/.histo/')
