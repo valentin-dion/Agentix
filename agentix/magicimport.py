@@ -16,6 +16,11 @@ def dynamic_import(directory_name):
 
     if target_dir not in sys.path:
         sys.path.append(target_dir)
+
+    target_files = glob.glob(target_dir + f'/**/{directory_name}/**/*.py', recursive=True)
+
+
+
     
     target_files = glob.glob(target_dir + f'/**/**/{directory_name}/**/*.py', recursive=True)
     
@@ -25,9 +30,12 @@ def dynamic_import(directory_name):
         _DEBUG and print(f"dynamic import of[orange i] `{file_path}`")
         # Extract module name from file path, excluding the directory part
         relative_path = os.path.relpath(file_path, target_dir)
-        sys.path.append(relative_path)
+        module_dir = os.path.dirname(relative_path)
+        if module_dir not in sys.path:
+            sys.path.append(parent(target_dir) if module_dir == '' else os.path.join(target_dir, module_dir))
         module_name = os.path.splitext(relative_path)[0].replace(os.sep, '.')
         
+
         # Import module
         if module_name not in sys.modules:
             __import__(module_name)
