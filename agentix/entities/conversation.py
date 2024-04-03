@@ -31,7 +31,7 @@ class Conversation:
         flags = {}
         # IF THE First message as a role `flags` then set flag_msg ,*msgs = msgs and flags = json.loads(flag_msg.content)
         if msgs[0].role == 'flags':
-            flags_msg, msgs = msgs
+            flags_msg, *msgs = msgs
             flags = json.loads(flags_msg.content)
         return cls(msgs, flags)
     def to_str(self) -> str:

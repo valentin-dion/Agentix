@@ -36,12 +36,13 @@ class Agent(metaclass=InstancesStore):
     def base_prompt(self): 
         grandparent_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '..', '..')) # FIXME should be relative to CWD
         pattern = grandparent_path + f"/**/prompts/{self.name}.conv"
-        histo_dir = os.path.dirname(self._histo_path)
-        if not os.path.exists(histo_dir):
-            os.makedirs(histo_dir, exist_ok=True)
+
 
         for file_path in glob.glob(pattern, recursive=True):
             self._histo_path = file_path.replace('/prompts/','/prompts/.histo/')
+            histo_dir = os.path.dirname(self._histo_path)
+            if not os.path.exists(histo_dir):
+                os.makedirs(histo_dir, exist_ok=True)
             return Conversation.from_file(file_path)
         
         raise FileNotFoundError(f"Did not find {self.name}.conv")
@@ -54,6 +55,12 @@ class Agent(metaclass=InstancesStore):
             return Conversation([])
            
     def append_histo(self, msg):
+        try:
+            last = self.histo[-1]
+            if last.content == msg.content and last.role == msg.role:
+                return
+        except:
+            pass
         (self.histo + msg).to_file(self._histo_path)    
     
 
@@ -65,7 +72,7 @@ class Agent(metaclass=InstancesStore):
         """
         self._middlewares = [MW[name.strip()] for name  in self._middlewares_str.split('|')]
         from agentix import Exec
-        ctx = {'exec':Exec.get_instance(),'agent':self, 'args':args}#'agent': self, 'input': args, 'hops':0}
+        ctx = {'exec':Exec.get_instance(),'agent':self, 'args':args, 'hops':0}#'agent': self, 'input': args, 'hops':0}
 
         
         conv = args
@@ -78,17 +85,13 @@ class Agent(metaclass=InstancesStore):
             while isinstance(conv, Conversation) and conv.should_infer:
                 _DEBUG and print(f"🤖[blue u b]{self.name}[/]_____\n{conv[-3:]}")
                 #FIXME add a method that doesn't set should_infer to True
+                self.append_histo(conv[-1])
                 conv = conv.rehop(
                     Tool['llm'](conv, conv._llm),
                     'assistant'
                     )
                 #TODO: allow conv.rehop(model="gpt-3.5-turbo")
-                
-                try:
-                    if conv[-2].role != 'assistant':
-                        self.append_histo(conv[-2])
-                except:
-                    pass # FIXME: `except: pass` is the smelliest python smell
+
                 self.append_histo(conv[-1])
                 ctx['hops'] += 1
                 conv.should_infer = False
