@@ -41,3 +41,12 @@ def test_conversation_to_str():
     conv = Conversation(msgs)
     expected_str = "user:Hello\n__-__\nsystem:Hi there!"
     assert conv.to_str() == expected_str
+def test_conversation_flag_persistence():
+    msgs = [Message("user", "Testing flags")]
+    conv = Conversation(msgs)
+    conv.should_infer = True  # Set the flag to True
+    temp_file_path = "temp_conv_test.conv"
+    conv.to_file(temp_file_path)  # Save to a file
+    conv_reloaded = Conversation.from_file(temp_file_path)  # Reload from the file
+    assert conv_reloaded.should_infer == True  # Check if the flag is still True
+    os.remove(temp_file_path)  # Clean up the temporary file
