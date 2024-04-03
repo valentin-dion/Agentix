@@ -2,6 +2,7 @@
 Defines the Conversation class, which represents a sequence of messages between a user and a system.
 """
 import os
+import json
 from copy import deepcopy
 from typing import List
 from .message import Message
@@ -27,10 +28,16 @@ class Conversation:
         msgs = [Message(role=role, content=content)
                 for msg_str in conv_str.split(SEP)
                 for role, content in [msg_str.strip().split(':', 1)]]
-        
-        return cls(msgs)
+        flags = {}
+        # IF THE First message as a role `flags` then set flag_msg ,*msgs = msgs and flags = json.loads(flag_msg.content)
+        if msgs[0].role == 'flags':
+            flags_msg, msgs = msgs
+            flags = json.loads(flags_msg.content)
+        return cls(msgs, flags)
     def to_str(self) -> str:
-        return SEP.join(f"{msg.role}:{msg.content}" for msg in self.msgs)
+        flag_msg = Message(role='flags',content=json.dumps(self._flags))
+        
+        return SEP.join(f"{msg.role}:{msg.content}" for msg in [flag_msg] + self.msgs)
 
     def to_file(self, path: str) -> None:
         with open(path, 'w') as f: f.write(self.to_str())
@@ -47,8 +54,9 @@ class Conversation:
         
     
     def __init__(self, msgs: List[Message], flags: dict= None) -> None:
+        flags = flags or {}
         self._msgs = msgs
-        self._flags = flags or {'should_infer': False}
+        self._flags = {'should_infer': False, **flags}
         self._llm = os.getenv('AGENTIX_MODEL') or 'gpt-4'
 
     @property

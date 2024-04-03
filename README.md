@@ -16,12 +16,16 @@ Low boilerplate agentic, as well as everything else.
 
 ## Why
 I've been researching agentic behaviors for the last 18 months.
-The biggest hurdle was accidental complexity.
-I took a pause and tried my best to design the most **Low code** and **Low boilerplate** framework to implement agentic logic.
-If we're aiming for self improvement, the framework Agents are written in, should also be the framework that Agents write in.
-For that reason, Agentix aims at offering tools to write frontend and web server stuff.
+My goal, all along, was to build an agent that would eventually help its own development.
+The biggest hurdle was accidental complexity. Using Langchain, I drawned in complexity and boilerplate.
 
-It also aims at implementing any arbitrarely complexe agentic flow with the least amount of code.
+I came to realize that Langchain was not the best approach, so I came to the conclusion I had to build things from scratch.
+
+I took a pause and tried my best to design the most **Low code** and **Low boilerplate** framework to implement agentic logic.
+
+(Side note that will become clear at some point: If we're aiming for self improvement, the framework Agents are written in, should also be the framework that Agents write in. For that reason, Agentix aims at offering tools to write frontend and web server stuff)
+
+The goal of writing my own framework is being able to implement any arbitrarely complexe agentic flow with the least amount of code.
 
 ## Why is the code weird ?
 
@@ -30,7 +34,7 @@ To access any logical brick, we, human, rely on the files system.
 
 What may be te best approach for humans may not be for LLMs.
 
-Bricks (functions, entities, endpoints, frontend components) should be accessed semanticaly, not through paths of any kind.
+Bricks (functions, entities, endpoints, frontend, components) should be accessed semanticaly, not through paths of any kind.
 
 
 

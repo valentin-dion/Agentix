@@ -30,14 +30,14 @@ class Agent(metaclass=InstancesStore):
         
         Agent[name] = self
         
-        self._middlewares = [MW[name.strip()] for name  in middlewares.split('|')]
+        self._middlewares_str = middlewares # 
         
     @property
     def base_prompt(self): 
         grandparent_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '..', '..')) # FIXME should be relative to CWD
         pattern = grandparent_path + f"/**/prompts/{self.name}.conv"
 
-        for file_path in glob.glob(pattern):
+        for file_path in glob.glob(pattern, recursive=True):
             self._histo_path = file_path.replace('/prompts/','/prompts/.histo/')
             return Conversation.from_file(file_path)
         
@@ -60,6 +60,7 @@ class Agent(metaclass=InstancesStore):
     def __call__(self, *args):
         """
         """
+        self._middlewares = [MW[name.strip()] for name  in self._middlewares_str.split('|')]
         from agentix import Exec
         ctx = {'exec':Exec.get_instance(),'agent':self, 'args':args}#'agent': self, 'input': args, 'hops':0}
 

@@ -1,4 +1,4 @@
-from agentix import Func, Tool, MW, mw, Exec, Agent, ImplState
+from agentix import Func, Tool, MW, mw, Exec, Agent
 from rich import print
 
 
@@ -71,4 +71,8 @@ def define_func_props(ctx, funcName):
     # La on va définir une par une les attributs
     Agent['Cody_define_proto'](ctx, funcName)
 @mw
-def impl_func():...
+def prompt_histo():...
+@mw
+def llm(): ...
+@mw
+def shellGPT_loop():...
