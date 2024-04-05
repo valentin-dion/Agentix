@@ -1,7 +1,7 @@
 from fire import Fire
 from agentix import Agent
 
-from rich import print
+from rich import print 
 
 @Fire
 class Agentix:

@@ -2,21 +2,26 @@
 Hi, I'm Valentin, I tinker with agentic.
 I want to automate myself as a senior software engineer.
 
-hire me (or just chat):v@lentin.fr
+At some point, my framework will be open to contribution.
+
+Right now, it's a resume project.
+
+My current full time job is to work on this repo until I'm hired as an agentic engineer/researcher.
+
+Want to hire me (or just chat) ? : v@lentin.fr
 
 Cite me: 
 [CITATION.cff](CITATION.cff)
 
 # Agentix
 
-Low boilerplate agentic.
+Low boilerplate functional agentic.
 
 ## Motivations
-[https://nuxt.com](Nuxt) is my inspiration.
+[https://nuxt.com](Nuxt) is my inspiration. It's an extreme example of "hiding the complexity". I want to hide myself as much complexity as possible when I implement agents.
 
 I want to be able to write arbitrary agentic pipelines with the minimum amount of code.
 
-I want the complexity to be hidden when I implement agents.
 
 I want an intuitive formalism to implement agentic pipelines with clear logic flow.
 
@@ -25,8 +30,8 @@ File (and by extension, lib) structures are for humans. I want my framework LLM 
 ## Limitations of Agentix
 * The approach is not made for speed. We want the smartest agents, not the most performant
 * Everything runs sequentially
-## Outrageous Python
-So I use python magic to auto-import my agents, middlewares, tools.
+## Python Magics
+I use python magics to auto-import my agents, middlewares, tools.
 If, somewhere within rightly name directories, a .py file exists and contains:
 ```python
 from agentix import tool
@@ -42,16 +47,19 @@ from agentix import Tool
 
 print(Tool['say_hello']('world'))
 ```
-## Agentic paradigms
-[AgenticParadigms.md](Agentic paragigms)
-
+## Theory
+[Agentic paradigms](AgenticParadigms.md)
+[Grounding is all you need](Soon.md)
 
 ## Agentix's assumptions
 ### Agents are functions
 
+
 **Black box description** (as opposed to *implementation details*):
 From the outside, an agent is conceptually a function. It ingests inputs and return outputs of given types.
 While this principle is simple and doesn't look like much, it proved unsuspectedly powerful to implement complex control flow over LLM inferences.
+
+**Agentic Single Responsibility Principle**: A given agent (as should, ideally a function), should do ONE task, and have as few in context tools as possible.
 
 **Exemple of control flow with agentFlow**
 ```python
@@ -64,7 +72,9 @@ Here's an actual piece of code I used to implement a long term memory:
 
 ```python
 for fact in Agent['LTM_fact_extract'](user_input):
-    Agent['LTM_fact_store'](fact)
+    Agent['LTM_fact_store'](
+        Agent['LTM_compress_fact'](fact)
+        )
 
 context = Agent['LTM_fact_recall'](user_input)
 ```
@@ -102,12 +112,16 @@ An agent is instanciated by a string representing the middlewares that composes 
 
 ### Primitive types
 `Conversation` is an entity composed of value objects `Message`s.
+
 `MW`, `Tool` and `Agent` are containers (`__getitem__(self, key:str)`), holding respectively: middlewares, tools and agents.
+
 `mw` and `tool` are decorators
 
+(That will become clearer when we'll walkthrough agents implementation)
 
 
-A conversation contains flags.
+A conversation contains flags, one of them is `should_infer`.
+
 if a middleware returns a conversation with `should_infer` flag to `True`, the conversation is fed to a LLM (specified with a flag, `gpt-4` default) then fed back to the same middleware.
 In all other cases, the output of a middleware is fed to the next, and the output of the last middleware is the output of the agent.
 
@@ -124,9 +138,6 @@ ____
 ![ltm](./assets/ltm1.png)
 
 
-
-### Tree of specialists
-#### Single responsibility principle
 
 
 ## Agentix tools
@@ -146,11 +157,46 @@ pip install -e .
 ```bash
 agentix create MyAgent
 ```
+it will create all the boilerplate you need to create an agent.
+
+AKA this file structure:
+```
+📂 agents
+  📂 MyAgent
+    ├ 📂 agents
+    │ └ 📄 MyAgent.py
+    ├ 📂 middlewares 
+    │ └ 📄 MyAgent_loop.py
+    ├ 📂 prompts
+    │ └ 📄 MyAgent.conv
+    ├ 📂 tests
+    └ 📂 tools
+
+```
+
+### run agent
+```bash
+agentix run MyAgent
+```
+### serve agent with gradio
+**TODO**
 
 
 ## Create your first agents
 ### ShellGPT
+an agent that handles the linux shell for you.
 
+(or a linux console you can talk to in natural language)
+
+[ShellGPT Walkthrough using TDD](ShellGPT_TDD.md) (TODO)
+
+[ShellGPT Walkthrough not using TDD](ShellGPT.md) (Easy)
+
+Both come to the same result
+### LTM (WIP)
+An conversationnal agent with Long Term Memory (Intermediate)
+### Frontend component factory (TODO)
+### Agent that codes its own tools (TODO)
 ### Components factory
 ## Debug
 ## Serve

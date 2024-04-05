@@ -59,13 +59,11 @@ assistant:How can I help you ma bro ?'''
 
         print("[green b]Gradio chatbot interface launched successfully.[/]")
 
-    def hello(self):
-        """Prints a simple hello message."""
-        print("Agentix says hello!")
-
-    def dummy_command(self):
-        """A dummy command to demonstrate the CLI."""
-        print("This is a dummy command.")
-
+    def run(self, name):
+        from agentix import Agent,Log, log 
+        @log
+        def onStream(msg):
+            print(f'\n\n[red]{msg}')
+        print(Agent[name](input(f"prompt {name}:")))
 def main():
     return fire.Fire(AgentixCLI)
