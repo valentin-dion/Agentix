@@ -34,6 +34,15 @@ def dynamic_import(directory_name):
         if module_dir not in sys.path:
             sys.path.append(parent(target_dir) if module_dir == '' else os.path.join(target_dir, module_dir))
         module_name = os.path.splitext(relative_path)[0].replace(os.sep, '.')
+
+        # Check if the path is to a Python file (not a directory) before importing
+        if os.path.isfile(file_path) and not module_name.endswith('__init__'):
+            # Import module
+            if module_name not in sys.modules:
+                try:
+                    __import__(module_name)
+                except ModuleNotFoundError as e:
+                    print(f"Failed to import {module_name}: {e}")
         
 
         # Import module
