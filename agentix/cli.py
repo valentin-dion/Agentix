@@ -1,2 +1,2 @@
 def main():
-    print("hello")
+    print("Agentix says hello!")
