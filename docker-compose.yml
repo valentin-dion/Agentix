@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  agentix:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    environment:
+      - AGENTIX_DEBUG=true
