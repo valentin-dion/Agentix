@@ -9,5 +9,5 @@ class AgentixCLI:
         """A dummy command to demonstrate the CLI."""
         print("This is a dummy command.")
 
-if __name__ == '__main__':
-    fire.Fire(AgentixCLI)
+def main():
+    return fire.Fire(AgentixCLI)
