@@ -26,7 +26,7 @@ def dynamic_import(directory_name):
     
  
     
-    for file_path in target_files:
+    for file_path in sorted(target_files):
         _DEBUG and print(f"dynamic import of[orange i] `{file_path}`")
         # Extract module name from file path, excluding the directory part
         relative_path = os.path.relpath(file_path, target_dir)
