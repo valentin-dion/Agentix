@@ -9,8 +9,6 @@ from rich import print
 
 _DEBUG = os.getenv('AGENTIX_DEBUG')
 
-
-    
 class Agent(metaclass=InstancesStore):
     def __init__(self, name: str, middlewares: str):
         """
@@ -20,7 +18,6 @@ class Agent(metaclass=InstancesStore):
         :param middlewares: A list of middleware instances to be used by the Agent.
         :raises Exception: If an Agent with the given name already exists.
         """
-
         _DEBUG and print(f"init Agent [green b]{name}[/] with [blue i]{middlewares}")
         # FIXME: Actually implement logs
         self.name = name 
@@ -29,8 +26,7 @@ class Agent(metaclass=InstancesStore):
             raise Exception(f"Agent with name '{name}' already exists.")
         
         Agent[name] = self
-        
-        self._middlewares_str = middlewares # 
+        self._middlewares_str = middlewares
         
     @property
     def base_prompt(self): 
@@ -59,7 +55,7 @@ class Agent(metaclass=InstancesStore):
             last = self.histo[-1]
             if last.content == msg.content and last.role == msg.role:
                 return
-        except:
+        except:#FIXME
             pass
         (self.histo + msg).to_file(self._histo_path)    
     

@@ -8,11 +8,11 @@ class InstancesStore(type):
         cls._store = {}  # Instance store specific to each class
         return cls
 
-    def __getitem__(cls, item: str) :
-        if item in cls._store:
+    def __getitem__(cls, item: str):
+        try:
             return cls._store[item]
-        
-        raise KeyError(f"No {cls.__name__} with name '{item}' found.")
+        except KeyError:
+            raise KeyError(f"No {cls.__name__} with name '{item}' found.")
 
     def __setitem__(cls, key: str, value) -> None:
         if key in cls._store:
@@ -22,3 +22,14 @@ class InstancesStore(type):
     def __contains__(cls, item: str) -> bool:
         return item in cls._store
 
+    def get(cls, item: str, default=None):
+        return cls._store.get(item, default)
+
+
+class DefaultInstanceStore(InstancesStore):
+    def __getitem__(cls, item: str):
+        
+        val = super().get(item) or super().get('_default')
+        if val is None:
+            raise KeyError(f"No {cls.__name__} with name '{item}' found and no default instance available.")
+        return val 

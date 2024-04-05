@@ -16,3 +16,4 @@ def prompt_histo(ctx, input_str):
     ctx['agent'].append_histo(ret[-1])
     
     return ret
+ 
