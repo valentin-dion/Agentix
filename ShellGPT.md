@@ -9,7 +9,8 @@ We want an agent that, given a user task request, runs commands in a feedback lo
 ## How our agent will work ?
 
 Given the initial few shot prompt:
-```systemYou are ShellGPT. You execute commands and get returned the shell's output.
+```
+system:You are ShellGPT. You execute commands and get returned the shell's output.
 You keep running command until the task you were asked to co is complete, or dimmed impossible.
 You execure commands using ```sh tags
 
@@ -21,6 +22,12 @@ user:can you create a file '/tmp/popo' and give me the exact rights and owners ?
 
 __-__
 
+assistant:reason step by step:
+* I should use touch
+* That can be done in two steps
+ * create the file using `touch`
+ * using `ls` to get infos
+
 `` `sh
 touch /tmp/popo
 `` `
@@ -31,7 +38,7 @@ system:
 
 __-__
 
-`` `sh
+assistant:`` `sh
 ls -la /tmp/popo
 `` `
 
@@ -54,10 +61,13 @@ _________________
 let's create our agent (assuming you've pip-installed agentix)
 ```bash
 # Be aware it will create the agent inside the directory you're in
-agentic create ShellGPT
+agentix create ShellGPT
 ```
 
 let's take a look at `agents/ShellGPT/agents/ShellGPT.py`
+
+TODO: Display file structure
+
 ```python
 from agentix import Agent
 
@@ -97,7 +107,7 @@ you'll find
 from agentix import mw, Tool
 
 @mw
-def Lucy_loop(ctx, conv):
+def ShellGPT_loop(ctx, conv):
     return conv
 ```
 ____________________
@@ -109,10 +119,53 @@ It's the only thing to understand to master Agentix
 ## 1: A middleware can return anything
 ## 2: The output of a middleware is fed to the next (with one exception)
 ## 3: the output of the last middleware is the output of the Agent/function
-# 4: Exception to `2`, if a middleware returns a instance of `Conversation` and that instance as the flag `should_infer` set to `True`, the conversation will be fed to a LLM (here, `gpt-4`) then fedback to THE SAME MIDDLEWARE !
+## 4: Exception to `2`, if a middleware returns a instance of `Conversation` and that instance as the flag `should_infer` set to `True`, the conversation will be fed to a LLM (here, `gpt-4`) then fedback to THE SAME MIDDLEWARE !
 
 giving this execution flow
 
 ![assets/middlewares.png](assets/middlewares.png)
 
 
+that being said, let's implement our loop
+
+```python
+from agentix import mw, Tool
+
+@mw 
+def shellGPT_loop(ctx, conv):
+    parser = Tool['parser']('```sh','```')
+    last_msg = conv[-1].content
+    commands = parser(last_msg)
+    
+    if commands:
+        #we should only ever have one
+        command, = commands
+        command_return = Tool['shell'](command)
+        return conv.rehop(
+            command_return
+        )
+
+    return conv
+```
+_______________
+We'll break that down later, first let's
+
+### Implement our tool
+
+let's create the file `agents/ShellGPT/tools/shell.py`
+
+```python
+from agentix import tool
+import subprocess
+
+@tool
+def shell(command: str) -> str:
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if result.returncode != 0:
+        return f"Error: {result.stderr}"
+    return result.stdout
+```
+
+### Middleware breakdown
+### let's execute our agent
+GIF

@@ -1,36 +1,45 @@
 # About
 Hi, I'm Valentin, I tinker with agentic.
+
 I want to automate myself as a senior software engineer.
 
-At some point, my framework will be open to contribution.
+This repo is about my Framework `Agentix` and what I'll build with it.
 
-Right now, it's a resume project.
-
+## You can hire me !
 My current full time job is to work on this repo until I'm hired as an agentic engineer/researcher.
 
 Want to hire me (or just chat) ? : v@lentin.fr
 
-Cite me: 
+Cite me (for some reason): 
 [CITATION.cff](CITATION.cff)
 
 # Agentix
 
 Low boilerplate functional agentic.
 
+## TL;WR
+
+For an implementation walktrhough go [here](#here1) then [here](#here2)
+
 ## Motivations
-[https://nuxt.com](Nuxt) is my inspiration. It's an extreme example of "hiding the complexity". I want to hide myself as much complexity as possible when I implement agents.
+My approach has some inspiration from [Nuxt](https://nuxt.com/). It's an extreme example of "hiding the complexity". 
+* I want to hide myself as much complexity as possible when I implement agents.
 
-I want to be able to write arbitrary agentic pipelines with the minimum amount of code.
+* I want to be able to write arbitrary agentic pipelines with the minimum amount of code.
 
+* I want an intuitive formalism to implement agentic pipelines with clear control flow.
 
-I want an intuitive formalism to implement agentic pipelines with clear logic flow.
-
-File (and by extension, lib) structures are for humans. I want my framework LLM friendly.
+### Foreshadowing a future version
+* File (and by extension, lib) structures are for humans. I want my framework LLM friendly.
 
 ## Limitations of Agentix
 * The approach is not made for speed. We want the smartest agents, not the most performant
 * Everything runs sequentially
-## Python Magics
+* If your project involves **RAG** more than **Agentic**, [DSPy](https://github.com/stanfordnlp/dspy) might be a better fit.
+* As of right now, Agentix only handles text (though embeddings and other modalities will be considered in a future version)
+* If you're looking for a mature project for prod environments, we're not there yet.
+
+## Python Magics and other smelly code
 I use python magics to auto-import my agents, middlewares, tools.
 If, somewhere within rightly name directories, a .py file exists and contains:
 ```python
@@ -47,52 +56,19 @@ from agentix import Tool
 
 print(Tool['say_hello']('world'))
 ```
+
 ## Theory
 [Agentic paradigms](AgenticParadigms.md)
-[Grounding is all you need](Soon.md)
+
+[Grounding is all you need](Grounding.md)
 
 ## Agentix's assumptions
 ### Agents are functions
+[Agent are functions](AgentsAsFunctions.md)
 
+TODO: TL;DR
 
-**Black box description** (as opposed to *implementation details*):
-From the outside, an agent is conceptually a function. It ingests inputs and return outputs of given types.
-While this principle is simple and doesn't look like much, it proved unsuspectedly powerful to implement complex control flow over LLM inferences.
-
-**Agentic Single Responsibility Principle**: A given agent (as should, ideally a function), should do ONE task, and have as few in context tools as possible.
-
-**Exemple of control flow with agentFlow**
-```python
-for task in Agent['taskLister'](user_input):
-    Agent['taskExecutor'](task)
-```
-
-Here's an actual piece of code I used to implement a long term memory:
-
-
-```python
-for fact in Agent['LTM_fact_extract'](user_input):
-    Agent['LTM_fact_store'](
-        Agent['LTM_compress_fact'](fact)
-        )
-
-context = Agent['LTM_fact_recall'](user_input)
-```
-
-
-It allows for strong algorithmic decoupling, which in turn makes easy to have very specialist agents.
-
-Akin to a function, an agent can itself be an arbitrarly complexe set of agents. Resulting for a given task in many contexts/conversations.
-
-**Note**: One thing I first thought as a tradeoff: my approach is heavy in LLM calls. In reality, it's balanced by the fact it requires overall less tokens generated than other approachs (when done correctly). Also, some Agents can run with `gpt-3.5-turbo`.
-
-_______________
-
-
-
-**experimental takeaway of this approach**
-* Increase overall performance
-* Multi-LLM architecture (some tasks can be handled by _gpt-3.5-turbo_, ) with gains in both speed and cost.
+[Why langchain kind of really suck but you've no idea why (it's not your fault)](WhyLangchain.md)
 
 _____________________
 
@@ -101,58 +77,50 @@ _____________________
 
 Time to get our hands dirty
 
-
-## Agents as stacks of Middlewares (inside view/implementation details)
-**Inside**:
-From the inside an agent is a stack of ordered middlewares.
-Each middleware should only contain agent core logic.
-(Printing, streaming, logging... should not ever be middlewares concern)
-
-An agent is instanciated by a string representing the middlewares that composes it
-
-### Primitive types
-`Conversation` is an entity composed of value objects `Message`s.
-
-`MW`, `Tool` and `Agent` are containers (`__getitem__(self, key:str)`), holding respectively: middlewares, tools and agents.
-
-`mw` and `tool` are decorators
-
-(That will become clearer when we'll walkthrough agents implementation)
-
-
-A conversation contains flags, one of them is `should_infer`.
-
-if a middleware returns a conversation with `should_infer` flag to `True`, the conversation is fed to a LLM (specified with a flag, `gpt-4` default) then fed back to the same middleware.
-In all other cases, the output of a middleware is fed to the next, and the output of the last middleware is the output of the agent.
-
-____
-
-Giving this execution flow:
-
-![Middlewares](./assets/middlewares.png)
-
-____
-
-(As for a real life illustration, here's what the flow of an LTM agent with only passive memory could look like)
-
-![ltm](./assets/ltm1.png)
-
+[Agents are stacks of middlewares](StacksOfMW.md)
 
 
 
 ## Agentix tools
-TODO: explain auto-import
-TODO: explain tool
-TODO: explain agent file structure
+### Magic import
+In agentix, agent initialization:
+```python
+from agentix import Agent
+
+Agent('Bob','prompt_histo|bob_router')
+```
+
+needs to be executed, not exported. If the code is ran, the agent will exist and be executable anywhere
+```python
+from agentix import Agent
+
+user_input = input('your input to Bob')
+print(Agent['Bob'](user_input))
+
+```
+
+To be imported, a `.py` file only has to exist somewhere under the directories: `agents`, `tools` or `middlewares`
+```
+📂 MyProject
+├📂 agents
+│ └📄 fooBar.py
+├📂 tools
+│  ├📂 any
+│  │ ├📂 depth
+│  │ │ └📄 BarFOO.py
+├📂 middlewares
+│ └📄 BazBah.py
 
 
+```
+
+# <a id="here1"></a>
 ## Install
 ```bash
 git clone https://github.com/valentin-dion/Agentix.git
 cd Agentix
 pip install -e .
 ```
-### run gradio
 ### create new agent
 ```bash
 agentix create MyAgent
@@ -181,20 +149,19 @@ agentix run MyAgent
 ### serve agent with gradio
 **TODO**
 
-
+# <a id="here2"></a>
 ## Create your first agents
 ### ShellGPT
 an agent that handles the linux shell for you.
-
 (or a linux console you can talk to in natural language)
 
-[ShellGPT Walkthrough using TDD](ShellGPT_TDD.md) (TODO)
+<!--[ShellGPT Walkthrough using TDD](ShellGPT_TDD.md) (TODO)-->
 
-[ShellGPT Walkthrough not using TDD](ShellGPT.md) (Easy)
+[ShellGPT Walkthrough](ShellGPT.md) (Easy)
 
-Both come to the same result
 ### LTM (WIP)
 An conversationnal agent with Long Term Memory (Intermediate)
+### Agentic Debugger (TODO)
 ### Frontend component factory (TODO)
 ### Agent that codes its own tools (TODO)
 ### Components factory
