@@ -30,7 +30,7 @@ class Agent(metaclass=InstancesStore):
         
     @property
     def base_prompt(self): 
-        grandparent_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '..', '..')) # FIXME should be relative to CWD
+        grandparent_path = os.getcwd()
         pattern = grandparent_path + f"/**/prompts/{self.name}.conv"
 
 
