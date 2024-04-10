@@ -47,3 +47,7 @@ ____
 
 ![ltm](./assets/ltm1.png)
 
+
+## How to implement/use middlewares ?
+
+[Go here](README.md#here2)

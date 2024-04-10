@@ -1,10 +1,14 @@
 import queue
 import threading
 from time import sleep
+import sys
+from rich import print
+
+agent_name = sys.argv[1]
 
 import gradio as gr
 
-from agentflow import tool, Agent
+from agentix import tool, Agent
 
 stream_queues = []
 
@@ -22,7 +26,7 @@ def on_stream(data):
 def stream_message(message, histo):
     """Generator function for the frontend library to consume the stream."""
     def launch(m):
-        on_stream(Agent['shell'](m))
+        on_stream(Agent[agent_name](m))
         on_stream('ENDOFSTUFF')
     th = threading.Thread(target=launch, args=(message,))
 
@@ -46,5 +50,5 @@ def stream_message(message, histo):
     th.join()
 
 
-
+print(f'launching [red b u]{agent_name}')
 print(gr.ChatInterface(stream_message).launch(share=True, debug=True))

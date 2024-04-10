@@ -43,21 +43,15 @@ assistant:How can I help you ma bro ?'''
 
         print(f"[red b]Agentix:[/]Agent structure for [green b]{name}[/] created successfully.")
 
-    def gradio(self):
+    def gradio(self, agent_name):
         """Creates a Gradio interface for an agent chatbot."""
         import gradio as gr
-        from agentix import Agent
+        from agentix import Tool
+        from rich import print
+        
+        print(f'[red] Yeah man [blue]{agent_name}')
+        print(Tool['shell'](f'python3 ./scripts/runGradio.py {agent_name}'))
 
-        def chatbot_interface(input_text):
-            # Assuming there's a default agent named 'default_agent' for demonstration.
-            # This should be replaced with the actual agent you want to use.
-            response = Agent['default_agent'](input_text)
-            return response[-1].content  # Assuming the response is a Conversation object
-
-        iface = gr.Interface(fn=chatbot_interface, inputs="text", outputs="text", title="Agentix Chatbot")
-        iface.launch()
-
-        print("[green b]Gradio chatbot interface launched successfully.[/]")
 
     def run(self, name):
         from agentix import Agent,Log, log 

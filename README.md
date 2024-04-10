@@ -22,7 +22,10 @@ Low boilerplate functional agentic.
 For an implementation walktrhough go [here](#here1) then [here](#here2)
 
 ## Motivations
-My approach has some inspiration from [Nuxt](https://nuxt.com/). It's an extreme example of "hiding the complexity". 
+My approach has some inspiration from [Nuxt](https://nuxt.com/). If you don't know Nuxt, it's low code, It's an extreme example of "hiding the complexity". You can implement anything and the learning curve is sharp.
+
+What motivates me coding my own framework ?
+
 * I want to hide myself as much complexity as possible when I implement agents.
 
 * I want to be able to write arbitrary agentic pipelines with the minimum amount of code.

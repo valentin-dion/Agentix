@@ -4,15 +4,18 @@
 Here we'll decribe Agentix's Agents behaviors. What you should consider when **USING** them (as opposed to their implementation details)
 
 
-Said otherwise, this is a **Black box description** .
+Said otherwise, this is a **Black box description** of what Agents are in Agentix.
 
 ## Agents, Are, Functions.
 From the outside, an **Agent is conceptually a function**. Oh, and also actually **a python function**. 
 
 It ingests inputs. 
 
-it return outputs of given types.
+It return outputs of given types.
 
+It mutates some states here and there.
+
+It's a Function. 
 
 
 While this principle is simple and doesn't look like much, it proved unsuspectedly powerful to implement complex control flow over LLM inferences.

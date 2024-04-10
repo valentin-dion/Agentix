@@ -2,8 +2,10 @@ import glob
 import importlib.util
 import os
 import sys
+from rich import print
 
-def dynamic_import(target_dir, directory_name):
+def dynamic_import( directory_name):
+    target_dir = os.getcwd()
     """Dynamically imports all Python files from a specified directory and its subdirectories.
 
     Args:
@@ -21,4 +23,4 @@ def dynamic_import(target_dir, directory_name):
             module = importlib.util.module_from_spec(spec)
             sys.modules[module_name] = module
             spec.loader.exec_module(module)
-            print(f"Dynamically imported `{module_name}` from `{file_path}`")
+            print(f"Dynamically imported [orange]`{module_name}`[/] from [red]`{file_path}`")
