@@ -1,4 +1,5 @@
 from collections import defaultdict
+import threading
 from .func_wrapper import FuncWrapper
 from .instances_store import DefaultInstanceStore
 
@@ -37,13 +38,13 @@ class Event( metaclass=DefaultInstanceStore):
         
     def __call__(self, *args):
         def run_handler(handler, args):
-            handler(*args)
+            thread = threading.Thread(target=run_handler, args=(handler, args))
+            thread.start()
 
-        """
-        Trigger all handlers for the current event name with provided arguments.
+        def run_handler(handler, args):
+            thread = threading.Thread(target=run_handler, args=(handler, args))
+            thread.start()
 
-        :param whut: Arguments to pass to the event handlers.
-        """
         for handler in self._handlers[self.item]:
             thread = threading.Thread(target=run_handler, args=(handler, args))
             thread.start()
