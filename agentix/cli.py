@@ -1,8 +1,12 @@
+from rich.console import Console
+from rich.panel import Panel
 import fire
 from rich import print
 
 class AgentixCLI:
     def list(self):
+        console = Console()
+        console.print(Panel("[bold green]Agentix Agents List[/bold green]", expand=False))
         from agentix import Agent
         for agent in Agent.keys():
             print(f"agent:\t[red]{agent}")
