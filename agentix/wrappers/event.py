@@ -40,10 +40,14 @@ class Event( metaclass=DefaultInstanceStore):
         def run_handler(handler, args):
             handler(*args)
 
+        threads = []
         for handler in self._handlers[self.item]:
-            thread = threading.Thread(target=run_handler, args=(handler, args))
-            thread.start()
-            thread.join()
+            t = threading.Thread(target=run_handler, args=(handler, args))
+            threads.append(t)
+            t.start()
+
+        for t in threads:
+            t.join()
     
     
 
