@@ -14,7 +14,7 @@ class AgentixCLI:
         tools = [f"[blue]{tool}" for tool in Tool.keys()]
         middlewares = [f"[green]{mw}" for mw in MW.keys()]
             
-        console.print(Panel(Columns([agents, tools, middlewares], expand=True, equal=True), title="[bold]Agents, Tools, and Middlewares[/bold]"))
+        console.print(Panel(Columns([*agents, *tools, *middlewares], expand=True, equal=True), title="[bold]Agents, Tools, and Middlewares[/bold]"))
         
             
         
