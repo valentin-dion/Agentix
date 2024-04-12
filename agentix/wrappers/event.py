@@ -35,14 +35,18 @@ class Event( metaclass=DefaultInstanceStore):
         """
         self.item = item
         
-    def __call__(self, *whut):
+    def __call__(self, *args):
+        def run_handler(handler, args):
+            handler(*args)
+
         """
         Trigger all handlers for the current event name with provided arguments.
 
         :param whut: Arguments to pass to the event handlers.
         """
         for handler in self._handlers[self.item]:
-            handler(*whut)
+            thread = threading.Thread(target=run_handler, args=(handler, args))
+            thread.start()
     
     
 
