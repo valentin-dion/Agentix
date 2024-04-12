@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich.columns import Columns
 from rich.panel import Panel
 import fire
 from rich import print
@@ -7,15 +8,14 @@ class AgentixCLI:
     def list(self):
         from agentix import Agent, MW, Tool
         console = Console()
-        console.print(Panel("[bold green]Agentix Agents List[/bold green]", expand=False))
+        console.print(Panel("[bold green]Agentix Components List[/bold green]", expand=False))
         
-        for agent in Agent.keys():
-            print(f"agent:\t[red]{agent}")
+        agents = [f"[red]{agent}" for agent in Agent.keys()]
+        tools = [f"[blue]{tool}" for tool in Tool.keys()]
+        middlewares = [f"[green]{mw}" for mw in MW.keys()]
             
-        console.print(Panel('[green b] Tools [/]', expand=False))
+        console.print(Panel(Columns([agents, tools, middlewares], expand=True), title="[bold]Agents, Tools, and Middlewares[/bold]"))
         
-        for tool in Tool.keys():
-            print("[u b green]tool[/]\t"+tool)
             
         
             
