@@ -36,19 +36,13 @@ class Event( metaclass=DefaultInstanceStore):
         self.item = item
         
     def __call__(self, *whut):
-        for handler in self._handlers[self.item]:
-            handler(*whut)
         """
         Trigger all handlers for the current event name with provided arguments.
 
         :param whut: Arguments to pass to the event handlers.
         """
-        if self.item in self._handlers:
-            for handler in self._handlers[self.item]:
-                handler(*whut)
-        else:
-            raise KeyError(f"No handlers found for event '{self.item}'.")
-    
+        for handler in self._handlers[self.item]:
+            handler(*whut)
     
     
 
