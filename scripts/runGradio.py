@@ -3,6 +3,7 @@ import threading
 from time import sleep
 import sys
 from rich import print
+from agentix.wrappers.event import Event
 
 agent_name = sys.argv[1]
 
@@ -18,9 +19,13 @@ def start_stream():
 
 
 @tool
+# Define and register an event for handling stream data
+@Event.on('stream_data_event')
 def on_stream(data):
     """Callback function for the backend library to put data into the stream."""
     stream_queues[0].put(data)
+
+Event['_default'] = Event()  # Ensure default event instance is initialized if not already
 
 
 def stream_message(message, histo):
@@ -48,7 +53,6 @@ def stream_message(message, histo):
         stream_queues.pop()
 
     th.join()
-
 
 print(f'launching [red b u]{agent_name}')
 print(gr.ChatInterface(stream_message).launch(share=True, debug=True))
