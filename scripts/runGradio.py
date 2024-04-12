@@ -1,5 +1,6 @@
 import queue
 import threading
+from agentix.wrappers.event import Event
 from time import sleep
 import sys
 from rich import print
@@ -12,6 +13,17 @@ import gradio as gr
 from agentix import tool, Agent
 
 stream_queues = []
+
+# Register events for LLM operations
+@Event.on('before_message_processing')
+def before_message_processing(data):
+    # Placeholder for any pre-processing needed before message handling
+    pass
+
+@Event.on('after_message_processing')
+def after_message_processing(data):
+    # Placeholder for any post-processing or cleanup after message handling
+    pass
 
 
 def start_stream():
@@ -28,12 +40,15 @@ def on_stream(data):
 Event['_default'] = Event()  # Ensure default event instance is initialized if not already
 
 
+
 def stream_message(message, histo):
     """Generator function for the frontend library to consume the stream."""
     def launch(m):
         on_stream(Agent[agent_name](m))
         on_stream('ENDOFSTUFF')
     th = threading.Thread(target=launch, args=(message,))
+    Event['before_message_processing'](message)
+
 
     start_stream()
     th.start()
@@ -48,6 +63,7 @@ def stream_message(message, histo):
         if data == 'ENDOFSTUFF':
             break
         yield data
+        Event['after_message_processing'](data)
         stream_queues[0].task_done()
     while len(stream_queues):
         stream_queues.pop()
