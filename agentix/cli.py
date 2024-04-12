@@ -10,11 +10,13 @@ class AgentixCLI:
         console = Console()
         console.print(Panel("[bold green]Agentix Components List[/bold green]", expand=False))
         
-        agents = [f"[red]{agent}" for agent in Agent.keys()]
-        tools = [f"[blue]{tool}" for tool in Tool.keys()]
-        middlewares = [f"[green]{mw}" for mw in MW.keys()]
+        agents_column = Columns([f"[red]{agent}" for agent in Agent.keys()], title="Agents", expand=True)
+        tools_column = Columns([f"[blue]{tool}" for tool in Tool.keys()], title="Tools", expand=True)
+        middlewares_column = Columns([f"[green]{mw}" for mw in MW.keys()], title="Middlewares", expand=True)
             
-        console.print(Panel(Columns([*agents, *tools, *middlewares], expand=True, equal=True), title="[bold]Agents, Tools, and Middlewares[/bold]"))
+        console.print(agents_column)
+        console.print(tools_column)
+        console.print(middlewares_column)
         
             
         
