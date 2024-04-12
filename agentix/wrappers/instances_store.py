@@ -22,6 +22,15 @@ class InstancesStore(type):
     def __contains__(cls, item: str) -> bool:
         return item in cls._store
 
+    def keys(cls):
+        return cls._store.keys()
+
+    def values(cls):
+        return cls._store.values()
+
+    def items(cls):
+        return cls._store.items()
+
     def get(cls, item: str, default=None):
         return cls._store.get(item, default)
 
