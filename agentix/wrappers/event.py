@@ -18,6 +18,7 @@ class Event( metaclass=DefaultInstanceStore):
     @classmethod
     def on(cls, eventName):
         def _wrapper(func):
+            cls._handlers[eventName].append(func)
             return func
         return _wrapper
     
@@ -25,8 +26,8 @@ class Event( metaclass=DefaultInstanceStore):
         self.item = item
         
     def __call__(self, *whut):
-        ...
-        # Todo foreacj
+        for handler in self._handlers[self.item]:
+            handler(*whut)
         for handler in self._handlers[self.item]:
             ...        
     
@@ -35,4 +36,3 @@ class Event( metaclass=DefaultInstanceStore):
 
 Event['_default'] = Event()
     
-
