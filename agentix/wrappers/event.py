@@ -38,16 +38,12 @@ class Event( metaclass=DefaultInstanceStore):
         
     def __call__(self, *args):
         def run_handler(handler, args):
-            thread = threading.Thread(target=run_handler, args=(handler, args))
-            thread.start()
-
-        def run_handler(handler, args):
-            thread = threading.Thread(target=run_handler, args=(handler, args))
-            thread.start()
+            handler(*args)
 
         for handler in self._handlers[self.item]:
             thread = threading.Thread(target=run_handler, args=(handler, args))
             thread.start()
+            thread.join()
     
     
 
