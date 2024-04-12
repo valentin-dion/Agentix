@@ -24,8 +24,8 @@ While this principle is simple and doesn't look like much, it proved unsuspected
 
 Here's how "Agents are functions" works **Exemple of control flow with Agentix**
 ```python
-for task in Agent['taskLister'](user_input):
-    Agent['taskExecutor'](task)
+for task in Agent['task_lister'](user_input):
+    Agent['task_executor'](task)
 ```
 
 Here's an actual piece of code I used to implement a long term memory:

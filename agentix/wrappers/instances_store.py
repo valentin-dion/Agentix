@@ -41,4 +41,8 @@ class DefaultInstanceStore(InstancesStore):
         val = super().get(item) or super().get('_default')
         if val is None:
             raise KeyError(f"No {cls.__name__} with name '{item}' found and no default instance available.")
+        try:
+            val._set_item(item)
+        except:
+            ...
         return val 

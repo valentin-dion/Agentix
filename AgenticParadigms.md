@@ -38,3 +38,17 @@ Agents interact in a fixed way.
 ##### Functionnal agentic
 (what **Agentix** is all about).
 > Agents are functions
+
+_______________
+
+Broad intuitions:
+
+A LLM, configured as a chatbot works by being fed user inputs, conversation history, and it's own output until a STOP token is hit.
+
+What's presented to the LLM can be dynamic and evolve according to the LLM outputs.
+
+That's the "LLM as a computer" intuition.
+
+Another approach would be to consider hyper-specialised agents, that would be part of an algorithm. 
+
+I'm not sure where this can lead but a lot of cursor can be identified and some of the responsibility could shift from the LLM to the cognitive architecture.

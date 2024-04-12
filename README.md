@@ -16,10 +16,15 @@ Cite me (for some reason):
 # Agentix
 
 Low boilerplate functional agentic.
+ 
+_______________
 
 ## TL;WR
 
 For an implementation walktrhough go [here](#here1) then [here](#here2)
+
+________________
+
 
 ## Motivations
 My approach has some inspiration from [Nuxt](https://nuxt.com/). If you don't know Nuxt, it's low code, It's an extreme example of "hiding the complexity". You can implement anything and the learning curve is sharp.
