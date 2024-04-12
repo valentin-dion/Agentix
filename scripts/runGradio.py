@@ -14,6 +14,11 @@ from agentix import tool, Agent
 
 stream_queues = []
 
+@Event.on('streamUpdate')
+def handle_stream_update(data):
+    """Event handler for streaming updates."""
+    stream_queues[0].put(data)
+
 # Register events for LLM operations
 @Event.on('before_message_processing')
 def before_message_processing(data):
@@ -31,14 +36,7 @@ def start_stream():
 
 
 @tool
-# Define and register an event for handling stream data
-@Event.on('stream_data_event')
-def on_stream(data):
-    """Callback function for the backend library to put data into the stream."""
-    stream_queues[0].put(data)
-
 Event['_default'] = Event()  # Ensure default event instance is initialized if not already
-
 
 
 def stream_message(message, histo):
@@ -47,7 +45,7 @@ def stream_message(message, histo):
         on_stream(Agent[agent_name](m))
         on_stream('ENDOFSTUFF')
     th = threading.Thread(target=launch, args=(message,))
-    Event['before_message_processing'](message)
+    Event['before_message_processing'](message)  # Trigger before processing event
 
 
     start_stream()
