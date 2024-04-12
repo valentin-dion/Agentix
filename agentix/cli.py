@@ -5,11 +5,21 @@ from rich import print
 
 class AgentixCLI:
     def list(self):
+        from agentix import Agent, MW, Tool
         console = Console()
         console.print(Panel("[bold green]Agentix Agents List[/bold green]", expand=False))
-        from agentix import Agent
+        
         for agent in Agent.keys():
             print(f"agent:\t[red]{agent}")
+            
+        console.print(Panel('[green b] Tools [/]', expand=False))
+        
+        for tool in Tool.keys():
+            print("[u b green]tool[/]\t"+tool)
+            
+        
+            
+            
     def create(self, name):
         """Creates a new agent structure."""
         import os
