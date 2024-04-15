@@ -19,31 +19,21 @@ def handle_stream_update(data):
     """Event handler for streaming updates."""
     stream_queues[0].put(data)
 
-# Register events for LLM operations
-@Event.on('before_message_processing')
-def before_message_processing(data):
-    # Placeholder for any pre-processing needed before message handling
-    pass
 
-@Event.on('after_message_processing')
-def after_message_processing(data):
-    # Placeholder for any post-processing or cleanup after message handling
-    pass
 
 
 def start_stream():
     stream_queues.append(queue.Queue())
 
 
-@tool
-Event['_default'] = Event()  # Ensure default event instance is initialized if not already
 
 
 def stream_message(message, histo):
     """Generator function for the frontend library to consume the stream."""
     def launch(m):
-        on_stream(Agent[agent_name](m))
-        on_stream('ENDOFSTUFF')
+        Agent[agent_name](m)
+        sleep(0.4)
+        handle_stream_update('ENDOFSTUFF')
     th = threading.Thread(target=launch, args=(message,))
     Event['before_message_processing'](message)  # Trigger before processing event
 
@@ -61,7 +51,6 @@ def stream_message(message, histo):
         if data == 'ENDOFSTUFF':
             break
         yield data
-        Event['after_message_processing'](data)
         stream_queues[0].task_done()
     while len(stream_queues):
         stream_queues.pop()
