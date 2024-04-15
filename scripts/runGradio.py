@@ -33,7 +33,7 @@ def stream_message(message, histo):
     def launch(m):
         Agent[agent_name](m)
         sleep(0.4)
-        handle_stream_update('ENDOFSTUFF')
+        Event['streamUpdate']('ENDOFSTUFF')
     th = threading.Thread(target=launch, args=(message,))
     Event['before_message_processing'](message)  # Trigger before processing event
 
