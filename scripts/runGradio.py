@@ -24,7 +24,9 @@ def handle_stream_update(message):
 def stream_message(message):
     q = queue.Queue()
     stream_queues.append(q)
-    Agent[agent_name](message)
+    def agent_thread():
+        Agent[agent_name](message)
+    threading.Thread(target=agent_thread).start()
     while True:
         output = q.get()
         if output == 'END':
