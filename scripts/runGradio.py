@@ -12,11 +12,6 @@ import gradio as gr
 
 from agentix import tool, Agent
 
-stream_queues = []import gradio as gr
-from agentix import Event, Agent
-import sys
-import queue
-import threading
 
 agent_name = sys.argv[1] if len(sys.argv) > 1 else 'default_agent'
 stream_queues = []
