@@ -37,8 +37,8 @@ def stream_message(message):
 def setup_gradio_interface():
     iface = gr.Interface(
         fn=stream_message,
-        inputs=gr.inputs.Textbox(lines=2, placeholder="Type something..."),
-        outputs=gr.outputs.Textbox(),
+        inputs=gr.Textbox(lines=2, placeholder="Type something..."),
+        outputs=gr.Textbox(),
         allow_flagging="never",
         theme="default",
     )
