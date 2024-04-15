@@ -9,6 +9,9 @@ class Endpoint(FuncWrapper, metaclass=InstancesStore):
     
     code = file_property('code.py')
     docstring = file_property('docstring.md')
+    user_stories = file_property('user_stories.md')
+    test_cases = file_property('test_cases.md')
+    tests = file_property('tests.py')
     
     def __init__(self, name: str, func: callable):
         super().__init__(name, func) 
@@ -17,4 +20,3 @@ class Endpoint(FuncWrapper, metaclass=InstancesStore):
         os.makedirs(self.dir_path, exist_ok=True)
 
  
-
