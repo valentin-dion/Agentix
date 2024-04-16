@@ -5,4 +5,5 @@ from .Func import Func, func
 from .log import Log, log
 from .event import Event
 from .endpoint import Endpoint, endpoint
+from .page import Page, page
 
