@@ -27,6 +27,8 @@ const route = useRoute();
 // Simulate fetching pages on component mount
 onMounted(() => {
   fetchPages();
+  // Ensure Tailwind CSS is loaded only on the client side
+  loadTailwindCSS();
 });
 
 // Mock function to simulate fetching pages
@@ -46,7 +48,7 @@ function isActivePage(pagePath) {
   return route.path === pagePath;
 }
 
-setTimeout(() => {
+function loadTailwindCSS() {
   // Create a new script element
   const script = document.createElement('script');
 
@@ -65,5 +67,5 @@ setTimeout(() => {
   script.onerror = () => {
     console.error("Failed to load Tailwind CSS from CDN.");
   };
-}, 100); // The timeout delay in milliseconds (1000 ms = 1 second)
+}
 </script>
