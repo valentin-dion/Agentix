@@ -1,0 +1,7 @@
+user: This is a seed prompt.
+
+I want a frontend conversation editor based on Nuxt.
+I want to be able to reorder messages,
+I want to be able to remove messages
+I want each message to be editable.
+I want the roles to be editables.

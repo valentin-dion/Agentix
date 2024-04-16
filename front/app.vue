@@ -32,6 +32,27 @@ const isActivePage = (pagePath) => {
 
 // Simulate fetching pages on component mount
 onMounted(() => {
+  setTimeout(() => {
+  // Create a new script element
+  const script = document.createElement('script');
+
+  // Set the source of the script to the Tailwind CDN
+  script.src = "https://cdn.tailwindcss.com";
+
+  // Append the script to the body of the document
+  document.body.appendChild(script);
+
+  // Optional: Log to console when the script is loaded
+  script.onload = () => {
+    console.log("Tailwind CSS has been loaded successfully!");
+  };
+
+  // Optional: Handle loading errors
+  script.onerror = () => {
+    console.error("Failed to load Tailwind CSS from CDN.");
+  };
+}, 100); // The timeout delay in milliseconds (1000 ms = 1 second)
+
   fetchPages();
 });
 

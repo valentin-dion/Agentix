@@ -6,7 +6,7 @@ from rich import print
 
 class AgentixCLI:
     def list(self):
-        from agentix import Agent, MW, Tool
+        from agentix import Agent, MW, Tool, Event, Endpoint
         console = Console()
         console.print(Panel("[bold green]Agentix Components List[/bold green]", expand=False))
         
@@ -17,12 +17,33 @@ class AgentixCLI:
         console.print(tools_column)
         console.print("[bold cyan]────────────────────────────────────────────────[/bold cyan]")
         middlewares_column = Columns([f"[green]{mw}" for mw in MW.keys()], title="Middlewares", expand=True)
-                    console.print(middlewares_column)
+        console.print(middlewares_column)
+        
+        console.print("[b cyan]xxxxxxxxxxxx")
+        console.print(Endpoint.repr_all())
+        
+        @Event.on('tocto')
+        def prout(tata):
+            print(f'event toto:[green]\t{tata}')
+            
+        Event['tocto']('gazoubicc') 
         
             
         
             
-            
+    def endpoint(self, name):
+        '''create a new Endpoint'''  
+        import os
+        base_path = os.path.join('./endpoints/',name)
+        from agentix import Endpoint
+        
+        EP = Endpoint.factory(name)
+        EP.code = EP.code or f"""from agentix import endpoint
+@endpoint
+def {name}():
+    return "I'm {name}"
+""" 
+              
     def create(self, name):
         """Creates a new agent structure."""
         import os
@@ -80,5 +101,15 @@ assistant:How can I help you ma bro ?'''
         def onStream(msg):
             print(f'\n\n[red]{msg}')
         print(Agent[name](input(f"prompt {name}:")))
+        
+    def serve(self):
+        from agentix import Endpoint
+        from flask import Flask
+        app = Flask(__name__)
+        
+        Endpoint.bootstrap(app.route)
+        
+        app.run(debug=True)
+    
 def main():
     return fire.Fire(AgentixCLI)

@@ -16,6 +16,11 @@ from agentix import tool, Agent
 agent_name = sys.argv[1] if len(sys.argv) > 1 else 'default_agent'
 stream_queues = []
 
+@Event.on('stream_chunk')
+def printou(chunk):
+    from rich import print
+    print(f'[red]{chunk}',end='')
+
 @Event.on('stream_update')
 def handle_stream_update(message):
     for q in stream_queues:

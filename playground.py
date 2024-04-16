@@ -1,31 +1,6 @@
-from agentix import tool 
-
-@tool
-def parser(opening_tag, ending_tag) -> callable:
-    """
-    Parses text enclosed between specified opening and ending tags.
-    
-    Args:
-        opening_tag (str): The opening tag to look for.
-        ending_tag (str): The ending tag to look for.
-    
-    Returns:
-        callable: A function that takes a string and returns a list of parsed segments.
-    """
-    def parse(text:str):
-        
-        segments = text.split(opening_tag)
-        results = []
-        for segment in segments[1:]:
-            end_idx = segment.find(ending_tag)
-            if end_idx != -1:
-                results.append(segment[:end_idx].strip())
-        return results
-    return parse
-
 import re
+from rich import print
 
-@tool
 def xml_parser(tag_name):
     def parse(xml_string):
         result = {}
@@ -49,3 +24,17 @@ def xml_parser(tag_name):
                 result[name] = attr_dict
         return result
     return parse
+
+# Usage example:
+xml_string = '''blabla
+
+<comp name="aa" foo="bar">
+   content
+</comp>
+
+<comp name="bb" babaz="fri" toto="oui">foo_bar</comp>
+
+lkejlakj'''
+
+parser = xml_parser('comp')
+print(parser(xml_string))

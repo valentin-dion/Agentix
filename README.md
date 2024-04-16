@@ -13,6 +13,10 @@ Want to hire me (or just chat) ? : v@lentin.fr
 Cite me (for some reason): 
 [CITATION.cff](CITATION.cff)
 
+# What I'm currently working on
+
+[Coing a SWE agent](WIP.md)
+
 # Agentix
 
 Low boilerplate functional agentic.
@@ -74,9 +78,7 @@ print(Tool['say_hello']('world'))
 ### Agents are functions
 [Agent are functions](AgentsAsFunctions.md)
 
-TODO: TL;DR
-
-[Why langchain kind of really suck but you've no idea why (it's not your fault)](WhyLangchain.md)
+<!--[Why langchain kind of really suck but you've no idea why (it's not your fault)](WhyLangchain.md)-->
 
 _____________________
 
@@ -109,15 +111,15 @@ print(Agent['Bob'](user_input))
 
 To be imported, a `.py` file only has to exist somewhere under the directories: `agents`, `tools` or `middlewares`
 ```
-📂 MyProject
-├📂 agents
-│ └📄 fooBar.py
-├📂 tools
-│  ├📂 any
-│  │ ├📂 depth
-│  │ │ └📄 BarFOO.py
-├📂 middlewares
-│ └📄 BazBah.py
+📂MyProject
+├📂agents
+│ └📄fooBar.py
+├📂tools
+│ ├📂any
+│ │├📂depth
+│ ││└📄BarFOO.py
+├📂middlewares
+│ └📄BazBah.py
 
 
 ```

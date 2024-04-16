@@ -79,11 +79,11 @@ class Agent(metaclass=InstancesStore):
                 conv = mware(ctx, conv)
 
             while isinstance(conv, Conversation) and conv.should_infer:
-                _DEBUG and print(f"🤖[blue u b]{self.name}[/]_____\n{conv[-3:]}")
+                print(f"🤖[blue u b]{self.name}[/]_____\n{conv[-3:]}")
                 #FIXME add a method that doesn't set should_infer to True
                 self.append_histo(conv[-1])
                 conv = conv.rehop(
-                    Tool['llm'](conv, conv._llm),
+                    Tool['llm'](conv),
                     'assistant'
                     )
                 #TODO: allow conv.rehop(model="gpt-3.5-turbo")
