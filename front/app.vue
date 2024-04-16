@@ -27,8 +27,6 @@ const route = useRoute();
 // Simulate fetching pages on component mount
 onMounted(() => {
   fetchPages();
-  // Ensure Tailwind CSS is loaded only on the client side
-  loadTailwindCSS();
 });
 
 // Mock function to simulate fetching pages
@@ -46,26 +44,5 @@ function fetchPages() {
 // Function to determine if a page is the active page
 function isActivePage(pagePath) {
   return route.path === pagePath;
-}
-
-function loadTailwindCSS() {
-  // Create a new script element
-  const script = document.createElement('script');
-
-  // Set the source of the script to the Tailwind CDN
-  script.src = "https://cdn.tailwindcss.com";
-
-  // Append the script to the body of the document
-  document.body.appendChild(script);
-
-  // Optional: Log to console when the script is loaded
-  script.onload = () => {
-    console.log("Tailwind CSS has been loaded successfully!");
-  };
-
-  // Optional: Handle loading errors
-  script.onerror = () => {
-    console.error("Failed to load Tailwind CSS from CDN.");
-  };
 }
 </script>
