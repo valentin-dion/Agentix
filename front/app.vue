@@ -19,10 +19,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useNuxtApp } from '#app'; // Use Nuxt 3's useNuxtApp composable
 
 const pages = ref([]);
-const route = useRoute();
+const nuxtApp = useNuxtApp();
+const route = nuxtApp.$router.currentRoute; // Access current route using Nuxt 3's way
 
 // Ensure route is accessed after it's defined and check if route and route.path are defined
 const isActivePage = (pagePath) => {
