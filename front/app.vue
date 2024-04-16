@@ -24,9 +24,9 @@ import { useRoute } from 'vue-router';
 const pages = ref([]);
 const route = useRoute();
 
-// Ensure route is accessed after it's defined
+// Ensure route is accessed after it's defined and check if route and route.path are defined
 const isActivePage = (pagePath) => {
-  return route.value ? route.path === pagePath : false;
+  return route.value && route.value.path ? route.value.path === pagePath : false;
 };
 
 // Simulate fetching pages on component mount
