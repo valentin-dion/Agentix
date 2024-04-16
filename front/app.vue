@@ -24,6 +24,11 @@ import { useRoute } from 'vue-router';
 const pages = ref([]);
 const route = useRoute();
 
+// Ensure route is accessed after it's defined
+const isActivePage = (pagePath) => {
+  return route.value ? route.path === pagePath : false;
+};
+
 // Simulate fetching pages on component mount
 onMounted(() => {
   fetchPages();
@@ -39,10 +44,5 @@ function fetchPages() {
       { id: 3, title: 'Contact', path: '/contact' }
     ];
   }, 1000); // 1 second delay to mimic async API call
-}
-
-// Function to determine if a page is the active page
-function isActivePage(pagePath) {
-  return route.path === pagePath;
 }
 </script>
