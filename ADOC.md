@@ -1,14 +1,18 @@
-# Endpoint Documentation
+# Agentix Framework Documentation
 
-The `Endpoint` class in the Agentix framework is designed to facilitate the creation, registration, and management of API endpoints. It allows developers to easily expose functions as web service endpoints within an application.
+## Introduction
 
-## Overview
+The Agentix framework is designed to streamline the development of agent-based systems, providing a robust set of tools and wrappers that facilitate the creation, management, and deployment of intelligent agents. It supports a modular architecture, allowing developers to build complex systems with reusable components.
 
-Endpoints in Agentix are created by defining a function and decorating it with the `@endpoint` decorator. This process registers the function as an endpoint, making it accessible via HTTP requests.
+## Wrapper Overview
 
-## Creating and Registering Endpoints
+Wrappers in Agentix serve as foundational building blocks, each offering specific functionalities within the framework. They include `Endpoint`, `Func`, `Event`, `MW` (Middleware), `Tool`, and `Log`. These components interact to form the backbone of Agentix applications, enabling a wide range of capabilities from event handling to API endpoint creation.
 
-To create an endpoint, simply define a function that encapsulates the logic you wish to expose. Then, use the `@endpoint` decorator to register this function:
+### Endpoint
+
+Endpoints are crucial for exposing functions as web service endpoints. They allow developers to easily register functions that can be accessed via HTTP requests.
+
+#### Usage
 
 ```python
 from agentix import endpoint
@@ -18,30 +22,84 @@ def my_endpoint():
     return "Hello, World!"
 ```
 
-## Integration and Routing
+### Func
 
-The integration of endpoints into the application's routing is handled by the Agentix CLI. To launch the application and expose the registered endpoints, use the following command:
+The `Func` wrapper is used to register and manage functions within the Agentix framework. It provides a structured way to organize logic and functionalities.
 
-```bash
-agentix serve
+#### Example
+
+```python
+from agentix import func
+
+@func
+def my_function():
+    return "Functionality encapsulated."
 ```
 
-This command starts the web server and makes the endpoints accessible via HTTP requests.
+### Event
 
-## Example Usage
+Events enable event-driven programming, allowing components to react to various triggers within the system.
 
-Here's an example of how an endpoint might be integrated into a Flask application using the Agentix CLI:
+#### Implementing an Event Handler
 
-```bash
-agentix serve
+```python
+from agentix import Event
+
+@Event.on('my_event')
+def handle_event(data):
+    print(f"Event received: {data}")
 ```
 
-This command will start the Flask application and expose `my_endpoint` at the URL path `/my_endpoint`, responding to GET and POST requests.
+### MW (Middleware)
 
-## Advanced Features
+Middleware components process requests and responses, facilitating complex workflows and data processing within agents.
 
-The `Endpoint` class supports several advanced features, including custom properties like `code`, `docstring`, `user_stories`, `test_cases`, and `tests`. These properties can be used to enrich the endpoint's metadata and documentation.
+#### Defining Middleware
+
+```python
+from agentix import mw
+
+@mw
+def my_middleware(ctx, conv):
+    # Process conversation
+    return conv
+```
+
+### Tool
+
+Tools provide utility functions or integrations, supporting the operations of agents with external services or custom logic.
+
+#### Creating a Tool
+
+```python
+from agentix import tool
+
+@tool
+def my_tool():
+    return "Tool functionality."
+```
+
+### Log
+
+The `Log` wrapper offers logging and debugging capabilities, essential for monitoring and troubleshooting agent behaviors.
+
+#### Logging Example
+
+```python
+from agentix import logger
+
+logger.debug("This is a debug message.")
+```
+
+## Integration and Interaction
+
+These wrappers interact within the Agentix ecosystem to create a cohesive and flexible environment for developing agent-based applications. Their modular nature allows for easy customization and extension, catering to specific needs and scenarios.
+
+## Advanced Features and Customization
+
+Each wrapper supports advanced features and customization options, enabling developers to tailor their applications precisely. Best practices include leveraging the modular architecture for reusability and maintaining clear separation of concerns among components.
 
 ## Conclusion
 
-The `Endpoint` class provides a powerful and flexible way to define and manage API endpoints in Agentix applications. By following the simple pattern of defining functions and decorating them with `@endpoint`, developers can easily expose their application logic as web services.
+The Agentix framework's wrappers provide a powerful toolkit for building agent-based systems. By understanding and utilizing these components, developers can create sophisticated applications that are both scalable and maintainable. Experimentation and exploration within the framework are encouraged to fully leverage its capabilities.
+
