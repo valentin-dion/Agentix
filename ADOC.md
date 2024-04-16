@@ -20,23 +20,23 @@ def my_endpoint():
 
 ## Integration and Routing
 
-The integration of endpoints into the application's routing is handled externally, typically within the `cli.py` file for Flask applications. This setup allows for a separation of concerns, where `Endpoint` focuses on defining endpoints, and `cli.py` manages their integration into the web server.
+The integration of endpoints into the application's routing is handled by the Agentix CLI. To launch the application and expose the registered endpoints, use the following command:
+
+```bash
+agentix serve
+```
+
+This command starts the web server and makes the endpoints accessible via HTTP requests.
 
 ## Example Usage
 
 Here's an example of how an endpoint might be integrated into a Flask application using the Agentix CLI:
 
-```python
-# This is handled in cli.py, not directly by the developer
-def serve():
-    from agentix import Endpoint
-    from flask import Flask
-    app = Flask(__name__)
-    
-    Endpoint.bootstrap(app.route)
-    
-    app.run(debug=True)
+```bash
+agentix serve
 ```
+
+This command will start the Flask application and expose `my_endpoint` at the URL path `/my_endpoint`, responding to GET and POST requests.
 
 ## Advanced Features
 
