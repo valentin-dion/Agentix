@@ -1,10 +1,11 @@
 <template>
   <div>
-    <!-- Top menu -->
-    <nav class="bg-gray-800 text-white p-4">
+    <!-- Top menu with SOTA flat design and dark theme -->
+    <nav class="bg-gray-900 text-gray-200 p-4 shadow-md">
       <ul class="flex space-x-4">
         <li v-for="page in pages" :key="page.id">
-          <NuxtLink :to="page.path" class="hover:bg-gray-700 p-2 rounded">{{ page.title }}</NuxtLink>
+          <!-- Subtle hover effect without compromising flat design -->
+          <NuxtLink :to="page.path" class="hover:bg-gray-700 p-2 rounded transition-colors duration-150">{{ page.title }}</NuxtLink>
         </li>
       </ul>
     </nav>
