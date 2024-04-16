@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Top menu -->
-    <nav>
-      <ul>
+    <nav class="bg-gray-800 text-white p-4">
+      <ul class="flex space-x-4">
         <li v-for="page in pages" :key="page.id">
-          <NuxtLink :to="page.path">{{ page.title }}</NuxtLink>
+          <NuxtLink :to="page.path" class="hover:bg-gray-700 p-2 rounded">{{ page.title }}</NuxtLink>
         </li>
       </ul>
     </nav>
