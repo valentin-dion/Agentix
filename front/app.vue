@@ -8,8 +8,8 @@
         </li>
       </ul>
     </nav>
-    <!-- Content area rendered by Nuxt -->
-    <Nuxt />
+    <!-- Content area rendered by Nuxt, adjusted for Nuxt 3 -->
+    <NuxtPage />
   </div>
 </template>
 
