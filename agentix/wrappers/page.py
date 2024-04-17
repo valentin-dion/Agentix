@@ -14,7 +14,8 @@ class Page(metaclass=InstancesStore):
     mock = file_property('mock.py')  # New property for .py files
     vars = file_property('vars.py')  # New property for .py files
     
-    __getitem__ = lambda self, k: getattr(self, k)
+    def __getitem__(self, k):
+        return getattr(self, k)
     
     def __init__(self, name: str):
         self.name = name
@@ -31,5 +32,3 @@ page('{name}')"""
         ...
         
 page = Page
-
-        
