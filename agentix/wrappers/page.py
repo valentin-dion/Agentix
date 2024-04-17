@@ -7,6 +7,14 @@ class Page(metaclass=InstancesStore):
     template = file_property('tpl.vue')
     css = file_property('css.vue')
     js = file_property('js.vue')
+    prompt = file_property('prompt.conv')  # New property for .conv files
+    user_stories = file_property('user_stories.md')  # New property for .md files
+    test_cases = file_property('test_cases.md')  # New property for .md files
+    tests = file_property('tests.py')  # New property for .py files
+    mock = file_property('mock.py')  # New property for .py files
+    vars = file_property('vars.py')  # New property for .py files
+    
+    __getitem__ = lambda self, k: getattr(self, k)
     
     def __init__(self, name: str):
         self.name = name
@@ -18,5 +26,10 @@ class Page(metaclass=InstancesStore):
 
         self.py = f"""from agentix import page
 page('{name}')"""
+
+    def export(self):
+        ...
+        
+page = Page
 
         
