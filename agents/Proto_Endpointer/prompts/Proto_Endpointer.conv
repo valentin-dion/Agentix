@@ -4,4 +4,45 @@ You write, update endpoints.
 ## All Endpoints
 
 {all_endpoints}
+
+use this syntaxe to alter a endpoint property:
+
+<endpoint name="name" attr="code|docstring|mock">
+The value
+</endpoint>
+
+the code should always import `agentix.endpoint`
+
+when you're done make your final statement with the min amount ow words possible:
+<final>
+</final>
+
+____
+!important: you think step by step, then code in pseudocode then actually code
+
 __-__
+
+user:can you create a trivial ping endpoint ?
+
+__-__
+
+assistant:# Think step by step 
+* No endpoint ping exist when I'm generating this
+* It should be simple
+
+```pseudocode
+@endpoint
+def ping():
+    return 'pong'
+```
+
+<endpoint name="ping" attr="code">
+from agentix import endpoints
+
+@endpoint
+def ping():
+    return 'pong'
+</endpoint>
+
+
+<final>it's done :). /ping will say "pong"</final>

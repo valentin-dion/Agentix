@@ -17,6 +17,9 @@ class Page(metaclass=InstancesStore):
     def __getitem__(self, k):
         return getattr(self, k)
     
+    def __setitem__(self, key: str, value) -> None:
+        setattr(self, key, value)
+    
     def __init__(self, name: str):
         self.name = name
         cwd = os.getcwd()
@@ -29,6 +32,15 @@ class Page(metaclass=InstancesStore):
 page('{name}')"""
 
     def export(self):
-        ...
-        
+        nuxt_page = f"""
+{self.template}
+
+<style scoped>
+{self.css}
+</style>
+
+{self.js}"""
+
+        with open(self.out_path, "w") as f:
+            f.write(nuxt_page)
 page = Page

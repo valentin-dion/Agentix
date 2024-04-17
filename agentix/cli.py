@@ -110,6 +110,12 @@ assistant:How can I help you ma bro ?'''
         Endpoint.bootstrap(app.route)
         
         app.run(debug=True)
+        
+    def foo(self):
+        print('[red on green]x[green on blue]x[black on red]x'*30)
+        from agentix import Component, page
+        Component('testouille').template = """<template>oui</template>"""
+        
     
 def main():
     return fire.Fire(AgentixCLI)

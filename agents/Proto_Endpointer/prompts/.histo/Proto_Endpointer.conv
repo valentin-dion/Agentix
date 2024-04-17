@@ -1,9 +1,28 @@
 flags:{"should_infer": false}
 __-__
-user:What is your current status?
+user:create an endpoint to get messages history please
 __-__
-assistant:I'm operational and ready to assist you. How can I help you today?
-__-__
-user:What is your role?
-__-__
-assistant:My role is to manage and update endpoints. I write and modify the code for various endpoints as specified or requested. These endpoints can serve different functions, such as responding to specific queries or performing tasks based on the inputs they receive.
+assistant:# Think step by step 
+* Need to create an endpoint for fetching message history
+* Assume a simple list to store messages for now
+* Endpoint should return the list of messages
+
+```pseudocode
+messages = []
+
+@endpoint
+def get_messages_history():
+    return messages
+```
+
+<endpoint name="get_messages_history" attr="code">
+from agentix import endpoint
+
+messages = []
+
+@endpoint
+def get_messages_history():
+    return messages
+</endpoint>
+
+<final>Created get_messages_history endpoint.</final>

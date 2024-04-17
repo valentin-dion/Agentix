@@ -173,3 +173,89 @@ __-__
 user:Est-ce que tu peux expliquer en français à quoi tu sers ?
 __-__
 assistant:Je suis une intelligence artificielle conçue pour faciliter les interactions et la gestion de tâches entre différents agents spécialisés. Mon rôle principal est de servir de pont entre vous, l'utilisateur, et les agents spécialisés dans divers domaines, tels que la gestion de listes de tâches (TODOer), le développement de logiciels (CoderFront), et la gestion d'endpoints (Proto_Endpointer). Je suis ici pour comprendre vos demandes, les diriger vers l'agent approprié, et vous fournir une réponse concise et efficace.
+__-__
+user:create an endpoint to get conversation history please
+__-__
+user:create an endpoint to get conversation history please
+__-__
+assistant:To create an endpoint for retrieving conversation history, I'll need to communicate this task to the Proto_Endpointer agent, who is responsible for managing and updating endpoints.
+
+```agent
+Proto_Endpointer:create an endpoint to get conversation history please
+```
+__-__
+system:# Think step by step 
+1. Define the purpose: Create an endpoint to retrieve conversation history.
+2. Determine inputs: None required for basic functionality, but could consider filters or limits later.
+3. Determine output: A list of conversation entries.
+4. Consider any dependencies or external data sources needed: Access to a conversation history storage or database.
+
+```pseudocode
+@endpoint
+def get_conversation_history():
+    # Placeholder for fetching conversation history logic
+    conversation_history = fetch_conversation_history()
+    return conversation_history
+```
+
+# Actual code
+
+<endpoint name="get_conversation_history" attr="code">
+from agentix import endpoint
+
+@endpoint
+def get_conversation_history():
+    # This is a placeholder implementation. In a real scenario, this function would interact with a database or storage system.
+    # Assuming a simple list of strings represents the conversation history for demonstration purposes.
+    conversation_history = ["User: How's the weather today?", "Bot: It's sunny and warm."]
+    return conversation_history
+</endpoint>
+__-__
+assistant:The Proto_Endpointer agent has created a pseudocode for an endpoint to retrieve conversation history. Here's the basic structure:
+
+```python
+@endpoint
+def get_conversation_history():
+    # Placeholder for fetching conversation history logic
+    conversation_history = fetch_conversation_history()
+    return conversation_history
+```
+
+In a real scenario, the `fetch_conversation_history()` function would interact with a database or storage system to retrieve the actual conversation history. For now, it's just a placeholder.
+
+Please note that this is a simplified example and the actual implementation may vary based on the specific requirements and the system architecture.
+__-__
+user:create an endpoint to get messages history please
+__-__
+user:create an endpoint to get messages history please
+__-__
+assistant:To create an endpoint for retrieving messages history, I'll need to communicate this task to the Proto_Endpointer agent, who is responsible for managing and updating endpoints.
+
+```agent
+Proto_Endpointer:create an endpoint to get messages history please
+```
+__-__
+system:# Think step by step 
+* Need to create an endpoint for fetching message history
+* Assume a simple list to store messages for now
+* Endpoint should return the list of messages
+
+```pseudocode
+messages = []
+
+@endpoint
+def get_messages_history():
+    return messages
+```
+
+<endpoint name="get_messages_history" attr="code">
+from agentix import endpoint
+
+messages = []
+
+@endpoint
+def get_messages_history():
+    return messages
+</endpoint>
+
+<final>Created get_messages_history endpoint.</final>
