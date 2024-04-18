@@ -17,7 +17,8 @@ class Component(metaclass=InstancesStore):
     def __init__(self, name: str):
         self.name = name
         cwd = os.getcwd()
-        self.dir_path = os.path.join(cwd, "components", name)
+        self.dir_path = os.path.join(cwd, "bricks/components", name)
+        self.out_path = os.path.join(cwd, f"front/pages/{name}.vue")
         os.makedirs(self.dir_path, exist_ok=True)
         
         # Initialize Python file with a basic structure if it does not exist
@@ -25,6 +26,6 @@ class Component(metaclass=InstancesStore):
             self.py = f"""from agentix import component as c
 c('{name}')
 """#TODO add logger
-    
+
 
 component = Component

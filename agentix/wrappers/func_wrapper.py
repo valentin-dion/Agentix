@@ -31,6 +31,9 @@ def file_property(filename):
         file_path = os.path.join(self.dir_path, filename)
         with open(file_path, 'w') as file:
             file.write(value)
+            
+        if hasattr(self,'export'):
+            self.export()
 
     return property(getter, setter)
 

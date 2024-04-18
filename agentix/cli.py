@@ -113,8 +113,15 @@ assistant:How can I help you ma bro ?'''
         
     def foo(self):
         print('[red on green]x[green on blue]x[black on red]x'*30)
-        from agentix import Component, page
-        Component('testouille').template = """<template>oui</template>"""
+        from agentix import Page
+        Page('Logs').template = '<template><h1>logs</h1></template'
+        Page('Logs').css = '''
+h1{
+    margin:5vh;
+    color:#00ff55;
+    }'''
+        Page('Logs').js = '//TODO'
+    
         
     
 def main():

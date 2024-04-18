@@ -16,7 +16,7 @@ class Endpoint( metaclass=InstancesStore):
     def __init__(self, name: str):
         self.name = name
         cwd = os.getcwd()
-        self.dir_path = os.path.join(cwd, "endpoints", name)
+        self.dir_path = os.path.join(cwd, "bricks/endpoints", name)
         os.makedirs(self.dir_path, exist_ok=True)
     
         
