@@ -22,6 +22,7 @@ class Page(metaclass=InstancesStore):
     
     def __init__(self, name: str):
         self.name = name
+        
         cwd = os.getcwd()
         self.dir_path = os.path.join(cwd, "bricks/pages", name)
         self.out_path = os.path.join(cwd, f"front/pages/{name}.vue")
@@ -32,6 +33,10 @@ class Page(metaclass=InstancesStore):
 page('{name}')"""
 
     def export(self):
+        try:
+            Page[self.name] = self
+        except:
+            ...
         nuxt_page = f"""
 {self.template}
 

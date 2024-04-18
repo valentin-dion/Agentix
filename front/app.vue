@@ -59,12 +59,14 @@ onMounted(() => {
 // Mock function to simulate fetching pages
 function fetchPages() {
   // Simulating a delay and response from an API
-  setTimeout(() => {
-    pages.value = [
-      { id: 1, title: 'Home', path: '/' },
-      { id: 2, title: 'About', path: '/about' },
-      { id: 3, title: 'Contact', path: '/contact' }
-    ];
+  setTimeout(async () => {
+    pages.value = [ {id:1,title:'index',path:'/'}, ...(await back('all_pages')).map(p=>{
+      return {id:p,title:p,path:`/${p}`}
+    })];
   }, 1000); // 1 second delay to mimic async API call
+
+  setInterval(()=>{
+    
+  },1555)
 }
 </script>

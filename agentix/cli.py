@@ -105,7 +105,9 @@ assistant:How can I help you ma bro ?'''
     def serve(self):
         from agentix import Endpoint
         from flask import Flask
+        from flask_cors import CORS
         app = Flask(__name__)
+        CORS(app)
         
         Endpoint.bootstrap(app.route)
         
@@ -113,14 +115,16 @@ assistant:How can I help you ma bro ?'''
         
     def foo(self):
         print('[red on green]x[green on blue]x[black on red]x'*30)
-        from agentix import Page
-        Page('Logs').template = '<template><h1>logs</h1></template'
+        from agentix import Page, Endpoint
+        Page('Logs').template = '<template><h1>logs</h1></template>'
         Page('Logs').css = '''
 h1{
     margin:5vh;
     color:#00ff55;
     }'''
         Page('Logs').js = '//TODO'
+        
+
     
         
     

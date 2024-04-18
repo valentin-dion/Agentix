@@ -1,11 +1,11 @@
 
-<template><h1>logs</h1></template>
+<template><h1>indesx</h1></template>
 
 <style scoped>
 
 h1{
     margin:5vh;
-    color:#00ff55;
+    color:#ff02c0;
     }
 </style>
 

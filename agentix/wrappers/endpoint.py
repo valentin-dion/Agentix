@@ -21,7 +21,7 @@ class Endpoint( metaclass=InstancesStore):
     
         
     @classmethod
-    def factory(cls, name):
+    def factory(cls, name:str) -> 'Endpoint':
         if name not in cls:
             cls[name] = cls(name)
         return cls[name]
